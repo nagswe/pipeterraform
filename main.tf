@@ -1,22 +1,14 @@
-pipeline {
-    agent any
 
-    stages {
-        stage('checkout') {
-            steps {
-                git ''
-            }
-        }
-        stage('terraform init') {
-            steps {
-                sh ("terraform init");
-            }
-        }
-           stage('terraform Action') {
-            steps {
-                echo "terraform action from the parameter is -- > ${action}"
-                sh ("terraform ${action} --auto-approve");
-            }
-        }
-    }
+provider "aws" {
+  region = "eu-west-2"
+  
+}
+
+resource "aws_instance" "example" {
+  ami           = "ami-06373f703eb245f45"
+  instance_type = var.instance_type
+  key_name = "dockerswarm"
+  tags= {
+    Name = "Nagesh"
+  }
 }
